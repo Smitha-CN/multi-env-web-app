@@ -21,6 +21,9 @@ pipeline {
         stage('Terraform Init') {
             steps {
                 dir("envs\\${params.ENVIRONMENT}") {
+                    bat "echo ==== FILE LIST ===="
+                    bat "dir"
+                    bat "type terraform.tfvars"
                     bat "terraform init -backend-config=..\\..\\backend\\backend-${params.ENVIRONMENT}.tf"
                 }
             }
