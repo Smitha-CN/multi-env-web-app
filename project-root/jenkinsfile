@@ -32,7 +32,7 @@ pipeline {
         stage('Terraform Plan') {
             steps {
                 dir("envs\\${params.ENVIRONMENT}") {
-                    bat "terraform plan -var-file=terraform.tfvars"
+                    bat "terraform plan -var-file=dev.tfvars""
                 }
             }
         }
@@ -41,7 +41,7 @@ pipeline {
             steps {
                 dir("envs\\${params.ENVIRONMENT}") {
                     input message: "Apply changes to ${params.ENVIRONMENT}?"
-                    bat "terraform apply -auto-approve -var-file=terraform.tfvars"
+                    bat "terraform apply -auto-approve -var-file=dev.tfvars"
                 }
             }
         }
