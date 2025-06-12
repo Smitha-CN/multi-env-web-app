@@ -22,10 +22,4 @@ resource "aws_subnet" "public" {
 
 data "aws_availability_zones" "available" {}
 
-output "vpc_id" {
-  value = aws_vpc.this.id
-}
 
-output "public_subnet_id" {
-  value = aws_subnet.public.id
-}
