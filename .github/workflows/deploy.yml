@@ -1,0 +1,40 @@
+name: Terraform S3 Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Choose the environment'
+        required: true
+        default: 'dev'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        run: |
+          cd envs/${{ github.event.inputs.environment }}
+          terraform init -backend-config=../../backend/backend-${{ github.event.inputs.environment }}.tf
+
+      - name: Terraform Plan
+        run: |
+          cd envs/${{ github.event.inputs.environment }}
+          terraform plan -var-file=${{ github.event.inputs.environment }}.tfvars
+
+      - name: Terraform Apply (optional/manual approval)
+        if: github.ref == 'refs/heads/main'
+        run: |
+          cd envs/${{ github.event.inputs.environment }}
+          terraform apply -auto-approve -var-file=${{ github.event.inputs.environment }}.tfvars
