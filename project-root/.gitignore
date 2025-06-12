@@ -1,0 +1,31 @@
+# Terraform files
+*.tfstate
+*.tfstate.*
+.terraform/
+.crash
+*.tfvars      # Exclude all .tfvars by default
+!dev.tfvars   # Except environment-specific files you want to keep
+!prod.tfvars
+
+# Backend config
+backend.tf
+*.tfbackend
+
+# Jenkins
+*.log
+*.tmp
+*.swp
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.iml
+
+# Node/Docker (if used later)
+node_modules/
+.env
+docker-compose.override.yml
