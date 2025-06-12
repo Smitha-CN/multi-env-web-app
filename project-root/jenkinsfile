@@ -26,22 +26,23 @@ pipeline {
             }
         }
 
-        stage('Terraform Plan') {
-            steps {
-                dir("envs\\${params.ENVIRONMENT}") {
-                    bat "terraform plan -var-file=terraform.tfvars"
-                }
-            }
+       stage('Terraform Plan') {
+    steps {
+        dir("envs\\${params.ENVIRONMENT}") {
+            bat "terraform plan -var-file=${params.ENVIRONMENT}.tfvars"
         }
+    }
+}
 
-        stage('Terraform Apply') {
-            steps {
-                dir("envs\\${params.ENVIRONMENT}") {
-                    input message: "Apply changes to ${params.ENVIRONMENT}?"
-                    bat "terraform apply -auto-approve -var-file=terraform.tfvars"
-                }
-            }
+stage('Terraform Apply') {
+    steps {
+        dir("envs\\${params.ENVIRONMENT}") {
+            input message: "Apply changes to ${params.ENVIRONMENT}?"
+            bat "terraform apply -auto-approve -var-file=${params.ENVIRONMENT}.tfvars"
         }
+    }
+}
+
     }
 
     post {
