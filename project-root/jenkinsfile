@@ -25,6 +25,9 @@ pipeline {
                 }
             }
         }
+bat "echo ==== CHECK FILES ===="
+bat "dir"
+bat "type ${params.ENVIRONMENT}.tfvars"
 
        stage('Terraform Plan') {
     steps {
