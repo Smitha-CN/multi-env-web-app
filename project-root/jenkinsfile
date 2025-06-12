@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment {
-        AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')     // Replace with your Jenkins credential IDs
+        AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID') // Jenkins credential ID
         AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
         TF_IN_AUTOMATION      = "true"
     }
@@ -20,15 +20,15 @@ pipeline {
 
         stage('Terraform Init') {
             steps {
-                dir("envs\\${params.ENVIRONMENT}") {
-                    bat "terraform init -backend-config=..\\..\\backend\\backend-${params.ENVIRONMENT}.tf"
+                dir("project-root/envs/${params.ENVIRONMENT}") {
+                    bat "terraform init -backend-config=../../backend/backend-${params.ENVIRONMENT}.tf"
                 }
             }
         }
 
         stage('Terraform Plan') {
             steps {
-                dir("envs\\${params.ENVIRONMENT}") {
+                dir("project-root/envs/${params.ENVIRONMENT}") {
                     bat "echo ==== CHECK FILES ===="
                     bat "dir"
                     bat "type ${params.ENVIRONMENT}.tfvars"
@@ -39,7 +39,7 @@ pipeline {
 
         stage('Terraform Apply') {
             steps {
-                dir("envs\\${params.ENVIRONMENT}") {
+                dir("project-root/envs/${params.ENVIRONMENT}") {
                     input message: "Apply changes to ${params.ENVIRONMENT}?"
                     bat "terraform apply -auto-approve -var-file=${params.ENVIRONMENT}.tfvars"
                 }
