@@ -33,7 +33,7 @@ jobs:
           cd project-root/envs/${{ github.event.inputs.environment }}
           terraform plan -var-file=${{ github.event.inputs.environment }}.tfvars
 
-      - name: Terraform Apply (optional/manual approval)
+      - name: Terraform Apply (Optional)
         if: github.ref == 'refs/heads/main'
         run: |
           cd project-root/envs/${{ github.event.inputs.environment }}
