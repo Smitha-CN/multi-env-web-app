@@ -25,13 +25,14 @@ jobs:
 
       - name: Terraform Init
         run: |
-          cd project-root/envs/${{ github.event.inputs.environment }}
-          terraform init -backend-config=../../backend/backend-${{ github.event.inputs.environment }}.tf
+         cd project-root/envs/${{ github.event.inputs.environment }}
+          terraform init -input=false
 
       - name: Terraform Plan
         run: |
           cd project-root/envs/${{ github.event.inputs.environment }}
           terraform plan -var-file=${{ github.event.inputs.environment }}.tfvars
+
 
       - name: Terraform Apply (Optional)
         if: github.ref == 'refs/heads/main'
