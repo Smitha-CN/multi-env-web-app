@@ -6,7 +6,7 @@ on:
       environment:
         description: 'Choose the environment'
         required: true
-        default: 'dev'
+        
 
 jobs:
   deploy:
