@@ -1,19 +1,8 @@
-variable "instance_type" {
-  description = "EC2 instance type"
-  type        = string
+variable "ami_id" {}
+variable "instance_type" {}
+variable "subnet_id" {}
+variable "security_group_ids" {
+  type = list(string)
 }
-
-variable "environment" {
-  description = "Environment name"
-  type        = string
-}
-
-variable "vpc_id" {
-  description = "The ID of the VPC"
-  type        = string
-}
-
-variable "subnet_id" {
-  description = "The ID of the public subnet"
-  type        = string
-}
+variable "key_name" {}
+variable "env_name" {}
